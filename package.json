@@ -1,0 +1,8 @@
+{
+  "name": "realgs-golf",
+  "version": "1.0.0",
+  "description": "Real G's Golf - Premium Golf E-Commerce",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Real Gs Golf</title>
+<meta name="description" content="Shop premium golf clubs, balls, apparel and accessories at Real G's Golf.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
+    <ul class="nav-links">
+      <li><a href="shop.html" style="color:var(--white)">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="cart.html" class="cart-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <p class="section-eyebrow">Real G's Golf</p>
+    <h1>THE SHOP</h1>
+  </div>
+</div>
+
+<div class="shop-layout">
+  <!-- FILTERS -->
+  <aside class="shop-filters">
+    <div class="filter-section">
+      <h4>Category</h4>
+      <div id="catFilters"></div>
+    </div>
+    <div class="filter-section">
+      <h4>Price Range</h4>
+      <label class="filter-option"><input type="radio" name="priceRange" value="all" checked> All Prices</label>
+      <label class="filter-option"><input type="radio" name="priceRange" value="under50"> Under $50</label>
+      <label class="filter-option"><input type="radio" name="priceRange" value="50-150"> $50 – $150</label>
+      <label class="filter-option"><input type="radio" name="priceRange" value="over150"> Over $150</label>
+    </div>
+  </aside>
+
+  <!-- PRODUCTS -->
+  <main class="shop-main">
+    <div class="shop-toolbar">
+      <p><span id="productCount">0</span> products</p>
+      <select id="sortSelect">
+        <option value="default">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name">Name: A–Z</option>
+      </select>
+    </div>
+    <div class="products-grid" id="shopGrid"></div>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
+      <p>Premium golf gear for serious players.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Shop</h4>
+      <a href="shop.html">All Products</a>
+    </div>
+    <div class="footer-links">
+      <h4>Info</h4>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="returns.html">Returns</a>
+    </div>
+    <div class="footer-links">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Real G's Golf. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

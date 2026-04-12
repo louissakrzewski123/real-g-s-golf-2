@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Real Gs Golf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
+    <div class="nav-right">
+      <a href="cart.html" class="cart-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div style="padding:8rem 2rem 6rem;max-width:1100px;margin:0 auto;">
+  <p class="section-eyebrow">Secure Checkout</p>
+  <h1 style="font-family:var(--font-display);font-size:clamp(2.5rem,5vw,5rem);line-height:0.9;margin-bottom:3rem;">CHECKOUT</h1>
+
+  <div style="display:grid;grid-template-columns:1fr 400px;gap:3rem;align-items:start;">
+
+    <!-- LEFT: Customer details form -->
+    <div>
+      <div style="margin-bottom:2.5rem;">
+        <h2 style="font-family:var(--font-condensed);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--dark3);">Contact Information</h2>
+        <div class="form-group"><label>Email Address</label><input type="email" id="email" placeholder="you@example.com" required></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group"><label>First Name</label><input type="text" id="firstName" required></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="lastName" required></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:2.5rem;">
+        <h2 style="font-family:var(--font-condensed);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--dark3);">Shipping Address</h2>
+        <div class="form-group"><label>Street Address</label><input type="text" id="address" required></div>
+        <div class="form-group"><label>Apartment / Unit (optional)</label><input type="text" id="address2"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group"><label>City</label><input type="text" id="city" required></div>
+          <div class="form-group"><label>State</label><input type="text" id="state" required></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group"><label>Postcode</label><input type="text" id="postcode" required></div>
+          <div class="form-group"><label>Country</label>
+            <select id="country">
+              <option value="AU">Australia</option>
+              <option value="NZ">New Zealand</option>
+              <option value="US">United States</option>
+              <option value="GB">United Kingdom</option>
+              <option value="CA">Canada</option>
+              <option value="SG">Singapore</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:2.5rem;">
+        <h2 style="font-family:var(--font-condensed);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--dark3);">Payment</h2>
+        <p style="font-size:0.8rem;color:var(--grey);margin-bottom:1rem;">All transactions are secure and encrypted.</p>
+
+        <!-- STRIPE PAYMENT ELEMENT -->
+        <div id="payment-element" style="background:var(--dark);border:1px solid var(--dark3);padding:1.25rem;margin-bottom:1rem;"></div>
+        <div id="payment-message" style="color:#c0392b;font-size:0.85rem;margin-bottom:1rem;"></div>
+      </div>
+
+      <button id="submitBtn" class="btn-primary" style="width:100%;padding:1.1rem;font-size:0.9rem;letter-spacing:0.15em;">
+        Place Order — <span id="btnTotal"></span>
+      </button>
+    </div>
+
+    <!-- RIGHT: Order summary -->
+    <div class="cart-summary" style="position:sticky;top:88px;">
+      <h3>Order Summary</h3>
+      <div id="checkoutItems"></div>
+      <div id="checkoutTotals"></div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <p>&copy; 2025 Real G's Golf. All rights reserved. Payments secured by Stripe.</p>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script>
+// =============================================
+// STRIPE CHECKOUT INTEGRATION
+// REPLACE 'pk_test_YOUR_KEY' with your actual
+// Stripe publishable key from stripe.com/dashboard
+// =============================================
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Render order summary
+  renderCheckoutSummary();
+
+  // Init Stripe
+  if (STRIPE_PUBLISHABLE_KEY === 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE') {
+    document.getElementById('payment-element').innerHTML =
+      '<p style="color:var(--accent);font-size:0.85rem;">⚠ Add your Stripe publishable key to checkout.html to enable payments.</p>';
+    return;
+  }
+
+  const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+  // Create PaymentIntent via your backend (Vercel serverless function)
+  const total = getCheckoutTotal();
+  try {
+    const response = await fetch('/api/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: Math.round(total * 100), currency: 'aud' })
+    });
+    const { clientSecret } = await response.json();
+
+    const elements = stripe.elements({ clientSecret, appearance: {
+      theme: 'night',
+      variables: {
+        colorPrimary: '#c8a96e',
+        colorBackground: '#1a1a1a',
+        colorText: '#f5f5f0',
+        fontFamily: 'Barlow, sans-serif',
+        borderRadius: '0px'
+      }
+    }});
+
+    const paymentElement = elements.create('payment');
+    paymentElement.mount('#payment-element');
+
+    document.getElementById('submitBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const btn = e.target;
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
+
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.origin + '/order-success.html',
+          receipt_email: document.getElementById('email').value,
+          shipping: {
+            name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+            address: {
+              line1: document.getElementById('address').value,
+              line2: document.getElementById('address2').value,
+              city: document.getElementById('city').value,
+              state: document.getElementById('state').value,
+              postal_code: document.getElementById('postcode').value,
+              country: document.getElementById('country').value,
+            }
+          }
+        }
+      });
+
+      if (error) {
+        document.getElementById('payment-message').textContent = error.message;
+        btn.textContent = 'Place Order';
+        btn.disabled = false;
+      }
+    });
+
+  } catch (err) {
+    document.getElementById('payment-element').innerHTML =
+      '<p style="color:#c0392b;font-size:0.85rem;">Payment system unavailable. Please try again later.</p>';
+  }
+});
+
+function getCheckoutTotal() {
+  const subtotal = Cart.getTotal();
+  const shipping = subtotal >= 150 ? 0 : 14.95;
+  return subtotal + shipping;
+}
+
+function renderCheckoutSummary() {
+  const items = Cart.items;
+  const subtotal = Cart.getTotal();
+  const shipping = subtotal >= 150 ? 0 : 14.95;
+  const total = subtotal + shipping;
+
+  document.getElementById('btnTotal').textContent = `$${total.toFixed(2)} AUD`;
+
+  document.getElementById('checkoutItems').innerHTML = items.map(item => {
+    const product = PRODUCTS.find(p => p.id === item.productId);
+    if (!product) return '';
+    return `
+      <div class="summary-row" style="align-items:center;">
+        <span style="color:var(--light-grey)">${product.name} × ${item.quantity}</span>
+        <span>$${(product.price * item.quantity).toFixed(2)}</span>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('checkoutTotals').innerHTML = `
+    <div class="summary-row" style="margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--dark3)">
+      <span>Subtotal</span><span>$${subtotal.toFixed(2)}</span>
+    </div>
+    <div class="summary-row"><span>Shipping</span><span>${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span></div>
+    <div class="summary-row total"><span>Total</span><span>$${total.toFixed(2)} AUD</span></div>
+  `;
+}
+</script>
+</body>
+</html>

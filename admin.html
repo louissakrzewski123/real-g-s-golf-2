@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Real Gs Golf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="loginGate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+  <div style="max-width:380px;width:100%;">
+    <p class="section-eyebrow" style="text-align:center;margin-bottom:1rem;">Real G's Golf</p>
+    <h1 style="font-family:var(--font-display);font-size:3rem;text-align:center;margin-bottom:2rem;">ADMIN</h1>
+    <div class="form-group"><label>Password</label><input type="password" id="adminPassword" placeholder="Enter admin password"></div>
+    <p id="loginError" style="color:#c0392b;font-size:0.8rem;margin-bottom:1rem;"></p>
+    <button class="btn-primary" style="width:100%;padding:1rem;" onclick="checkPassword()">Enter</button>
+    <p style="font-size:0.75rem;color:var(--grey);text-align:center;margin-top:1rem;">Change the password in admin.html line ~140</p>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD (hidden until logged in) -->
+<div id="adminDashboard" style="display:none;">
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
+      <div style="font-family:var(--font-condensed);font-size:0.75rem;letter-spacing:0.15em;color:var(--accent);">ADMIN PANEL</div>
+      <button class="btn-secondary" onclick="logout()" style="font-size:0.75rem;padding:0.5rem 1rem;">Logout</button>
+    </div>
+  </nav>
+
+  <div class="admin-wrap" style="padding-top:8rem;">
+    <p class="section-eyebrow">Real G's Golf</p>
+    <h1>DASHBOARD</h1>
+    <p class="admin-subtitle">Manage your orders and products</p>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;border:1px solid var(--dark3);margin-bottom:3rem;">
+      <div style="background:var(--dark);padding:2rem;border-right:1px solid var(--dark3);">
+        <p style="font-family:var(--font-condensed);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey);margin-bottom:0.5rem;">Pending Orders</p>
+        <p style="font-family:var(--font-display);font-size:3rem;color:var(--accent);" id="statPending">0</p>
+      </div>
+      <div style="background:var(--dark);padding:2rem;border-right:1px solid var(--dark3);">
+        <p style="font-family:var(--font-condensed);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey);margin-bottom:0.5rem;">Total Orders</p>
+        <p style="font-family:var(--font-display);font-size:3rem;color:var(--white);" id="statTotal">0</p>
+      </div>
+      <div style="background:var(--dark);padding:2rem;">
+        <p style="font-family:var(--font-condensed);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--grey);margin-bottom:0.5rem;">Products</p>
+        <p style="font-family:var(--font-display);font-size:3rem;color:var(--white);" id="statProducts">0</p>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="admin-card">
+      <h3>Pending Orders — Fulfil via AliExpress</h3>
+      <div id="ordersList">
+        <p style="color:var(--grey);font-size:0.875rem;padding:1rem 0;">No pending orders. Orders will appear here when customers purchase.</p>
+      </div>
+    </div>
+
+    <!-- ADD PRODUCT -->
+    <div class="admin-card">
+      <h3>Add New Product</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group"><label>Product Name</label><input type="text" id="newName" placeholder="e.g. Pro Series Wedge"></div>
+        <div class="form-group"><label>Price (AUD)</label><input type="number" id="newPrice" placeholder="99.99" step="0.01"></div>
+        <div class="form-group"><label>Category</label>
+          <select id="newCategory">
+            <option value="clubs">Clubs</option>
+            <option value="balls">Balls</option>
+            <option value="apparel">Apparel</option>
+            <option value="bags">Bags</option>
+            <option value="accessories">Accessories</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Image URL</label><input type="text" id="newImage" placeholder="https://..."></div>
+        <div class="form-group" style="grid-column:1/-1"><label>Description</label><textarea id="newDesc" rows="3" placeholder="Product description..."></textarea></div>
+        <div class="form-group" style="grid-column:1/-1"><label>AliExpress Supplier URL</label><input type="text" id="newAliUrl" placeholder="https://www.aliexpress.com/item/..."></div>
+      </div>
+      <button class="btn-primary" style="margin-top:0.5rem;" onclick="addProduct()">Add Product</button>
+      <p id="addProductMsg" style="font-size:0.85rem;color:var(--accent);margin-top:0.75rem;"></p>
+    </div>
+
+    <!-- PRODUCT LIST -->
+    <div class="admin-card">
+      <h3>Current Products</h3>
+      <div class="admin-product-list" id="adminProductList"></div>
+    </div>
+
+    <!-- HOW TO FULFIL -->
+    <div class="admin-card">
+      <h3>How to Fulfil an Order (2-min process)</h3>
+      <ol style="color:var(--grey);font-size:0.875rem;line-height:2;padding-left:1.25rem;">
+        <li>Click the AliExpress link next to the ordered product above</li>
+        <li>Add the item to your AliExpress cart</li>
+        <li>Enter the <strong style="color:var(--white)">customer's shipping address</strong> from the order above</li>
+        <li>Complete the AliExpress purchase (your cost price)</li>
+        <li>Click "Mark Fulfilled" on the order above</li>
+        <li>AliExpress ships directly to your customer — done ✓</li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/products.js"></script>
+<script>
+// ---- SET YOUR ADMIN PASSWORD HERE ----
+const ADMIN_PASSWORD = 'realgs2025';
+// --------------------------------------
+
+function checkPassword() {
+  const input = document.getElementById('adminPassword').value;
+  if (input === ADMIN_PASSWORD) {
+    document.getElementById('loginGate').style.display = 'none';
+    document.getElementById('adminDashboard').style.display = 'block';
+    initDashboard();
+  } else {
+    document.getElementById('loginError').textContent = 'Incorrect password.';
+  }
+}
+
+document.getElementById('adminPassword')?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+function logout() {
+  document.getElementById('loginGate').style.display = 'flex';
+  document.getElementById('adminDashboard').style.display = 'none';
+  document.getElementById('adminPassword').value = '';
+}
+
+function initDashboard() {
+  // Load products
+  renderProductList();
+  document.getElementById('statProducts').textContent = PRODUCTS.length;
+
+  // Load orders from localStorage
+  const orders = getOrders();
+  const pending = orders.filter(o => o.status === 'pending');
+  document.getElementById('statPending').textContent = pending.length;
+  document.getElementById('statTotal').textContent = orders.length;
+  renderOrders(orders);
+}
+
+function getOrders() {
+  const saved = localStorage.getItem('rgg_orders');
+  return saved ? JSON.parse(saved) : [];
+}
+
+function saveOrders(orders) {
+  localStorage.setItem('rgg_orders', JSON.stringify(orders));
+}
+
+function renderOrders(orders) {
+  const list = document.getElementById('ordersList');
+  const pending = orders.filter(o => o.status === 'pending');
+  if (pending.length === 0) {
+    list.innerHTML = '<p style="color:var(--grey);font-size:0.875rem;padding:1rem 0;">No pending orders.</p>';
+    return;
+  }
+  list.innerHTML = pending.map(order => `
+    <div class="order-item">
+      <div class="order-header">
+        <p class="order-id">Order #${order.id}</p>
+        <span class="order-status ${order.status}">${order.status}</span>
+      </div>
+      <p class="order-detail-row">Customer: <span>${order.customer?.name || 'N/A'}</span></p>
+      <p class="order-detail-row">Email: <span>${order.customer?.email || 'N/A'}</span></p>
+      <p class="order-detail-row">Ship to: <span>${order.shipping?.address || ''}, ${order.shipping?.city || ''} ${order.shipping?.postcode || ''}, ${order.shipping?.country || ''}</span></p>
+      <p class="order-detail-row">Items: <span>${(order.items || []).map(i => `${i.name} x${i.quantity}`).join(', ')}</span></p>
+      <p class="order-detail-row">Total: <span>$${order.total?.toFixed(2)} AUD</span></p>
+      <div style="display:flex;gap:0.75rem;margin-top:0.75rem;flex-wrap:wrap;">
+        ${(order.items || []).map(item => `
+          <a href="${item.aliexpressUrl || 'https://www.aliexpress.com'}" target="_blank" class="admin-btn" style="color:var(--accent);border-color:var(--accent);">
+            Order on AliExpress: ${item.name}
+          </a>
+        `).join('')}
+        <button class="btn-primary fulfill-btn" onclick="fulfillOrder('${order.id}')">Mark Fulfilled</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function fulfillOrder(orderId) {
+  const orders = getOrders();
+  const order = orders.find(o => o.id === orderId);
+  if (order) {
+    order.status = 'fulfilled';
+    order.fulfilledAt = new Date().toISOString();
+    saveOrders(orders);
+    initDashboard();
+    showAdminToast('Order marked as fulfilled!');
+  }
+}
+
+function renderProductList() {
+  const list = document.getElementById('adminProductList');
+  list.innerHTML = PRODUCTS.map(p => `
+    <div class="admin-product-item">
+      <span>${p.name}</span>
+      <span style="color:var(--accent)">$${p.price.toFixed(2)}</span>
+      <span style="color:var(--grey);font-size:0.8rem;">${p.categoryLabel}</span>
+      <div class="admin-actions">
+        <a href="product.html?id=${p.id}" target="_blank" class="admin-btn">View</a>
+        <a href="${p.aliexpressUrl || 'https://www.aliexpress.com'}" target="_blank" class="admin-btn" style="color:var(--accent)">AliExpress</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addProduct() {
+  const name = document.getElementById('newName').value.trim();
+  const price = parseFloat(document.getElementById('newPrice').value);
+  const category = document.getElementById('newCategory').value;
+  const image = document.getElementById('newImage').value.trim();
+  const desc = document.getElementById('newDesc').value.trim();
+  const aliUrl = document.getElementById('newAliUrl').value.trim();
+  const msg = document.getElementById('addProductMsg');
+
+  if (!name || !price || !desc) {
+    msg.style.color = '#c0392b';
+    msg.textContent = 'Please fill in name, price and description.';
+    return;
+  }
+
+  // Save to localStorage as pending product (you'll need to add it to products.js manually)
+  const pending = JSON.parse(localStorage.getItem('rgg_pending_products') || '[]');
+  const newProduct = {
+    id: 'rgg-' + Date.now(),
+    name, price, category,
+    categoryLabel: category.charAt(0).toUpperCase() + category.slice(1),
+    images: image ? [image] : [],
+    description: desc,
+    aliexpressUrl: aliUrl,
+    variants: {},
+    stock: 99,
+    featured: false,
+    badge: 'New'
+  };
+  pending.push(newProduct);
+  localStorage.setItem('rgg_pending_products', JSON.stringify(pending));
+
+  msg.style.color = 'var(--accent)';
+  msg.textContent = `✓ ${name} saved! Copy the product details to products.js to make it live on the store.`;
+
+  // Clear form
+  ['newName','newPrice','newImage','newDesc','newAliUrl'].forEach(id => document.getElementById(id).value = '');
+  showAdminToast('Product added!');
+}
+
+function showAdminToast(msg) {
+  let toast = document.querySelector('.toast');
+  if (!toast) { toast = document.createElement('div'); toast.className = 'toast'; document.body.appendChild(toast); }
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
