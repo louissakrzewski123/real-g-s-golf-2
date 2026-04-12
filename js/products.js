@@ -1,0 +1,101 @@
+const PRODUCTS = [
+  {
+    id: "rgg-001",
+    name: "Pro Series Driver",
+    category: "clubs",
+    categoryLabel: "Clubs",
+    price: 189.99,
+    originalPrice: 239.99,
+    badge: "Sale",
+    description: "Engineered for maximum distance and forgiveness. The Pro Series Driver features a titanium face and aerodynamic crown design to help you hit longer, straighter drives off the tee. Ideal for mid to low handicap golfers chasing extra yards.",
+    images: ["https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80"],
+    variants: { loft: ["9.5°", "10.5°", "12°"] },
+    stock: 15,
+    featured: true,
+    aliexpressUrl: "https://www.aliexpress.com"
+  },
+  {
+    id: "rgg-002",
+    name: "Tour Blade Iron Set",
+    category: "clubs",
+    categoryLabel: "Clubs",
+    price: 349.99,
+    originalPrice: null,
+    badge: "New",
+    description: "A full 7-piece iron set (4-PW) crafted for players who demand precision. Forged stainless steel heads deliver consistent feedback and a penetrating ball flight. Whether you're attacking flags or shaping shots, these irons deliver.",
+    images: ["https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80"],
+    variants: { flex: ["Regular", "Stiff", "Extra Stiff"], hand: ["Right Hand", "Left Hand"] },
+    stock: 8,
+    featured: true,
+    aliexpressUrl: "https://www.aliexpress.com"
+  },
+  {
+    id: "rgg-003",
+    name: "Premium Golf Glove",
+    category: "apparel",
+    categoryLabel: "Apparel",
+    price: 29.99,
+    originalPrice: null,
+    badge: null,
+    description: "Cabretta leather palm for superior grip and feel. Breathable lycra back keeps your hand cool in warm conditions. Reinforced thumb and index finger for extended durability.",
+    images: ["https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&q=80"],
+    variants: { size: ["S", "M", "L", "XL"], hand: ["Left Hand (RH Golfer)", "Right Hand (LH Golfer)"] },
+    stock: 50,
+    featured: true,
+    aliexpressUrl: "https://www.aliexpress.com"
+  },
+  {
+    id: "rgg-004",
+    name: "Performance Polo Shirt",
+    category: "apparel",
+    categoryLabel: "Apparel",
+    price: 64.99,
+    originalPrice: null,
+    badge: null,
+    description: "Moisture-wicking performance fabric keeps you dry and comfortable through 18 holes. Classic polo cut with a modern fit. UV protection built into the fabric.",
+    images: ["https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80"],
+    variants: { size: ["XS", "S", "M", "L", "XL", "XXL"], color: ["Black", "White", "Navy", "Charcoal"] },
+    stock: 30,
+    featured: true,
+    aliexpressUrl: "https://www.aliexpress.com"
+  },
+  {
+    id: "rgg-005",
+    name: "Tour Staff Bag",
+    category: "bags",
+    categoryLabel: "Bags",
+    price: 219.99,
+    originalPrice: 279.99,
+    badge: "Sale",
+    description: "Full-size tour staff bag with 14-way divider, multiple apparel pockets, and a built-in rain hood. Premium synthetic leather exterior. Oversized putter well and valuables pocket with fleece lining.",
+    images: ["https://images.unsplash.com/photo-1576766742800-0e0e7f3c7f26?w=800&q=80"],
+    variants: { color: ["Black", "Black/Gold"] },
+    stock: 12,
+    featured: false,
+    aliexpressUrl: "https://www.aliexpress.com"
+  },
+  {
+    id: "rgg-006",
+    name: "Premium Golf Balls (12 Pack)",
+    category: "balls",
+    categoryLabel: "Balls",
+    price: 44.99,
+    originalPrice: null,
+    badge: null,
+    description: "3-piece urethane construction for exceptional feel around the greens and maximum distance off the tee. 332 dimple pattern for a penetrating, stable flight in all conditions.",
+    images: ["https://images.unsplash.com/photo-1593111774240-d529f12cf4bb?w=800&q=80"],
+    variants: {},
+    stock: 100,
+    featured: false,
+    aliexpressUrl: "https://www.aliexpress.com"
+  }
+];
+
+const CATEGORIES = [
+  { id: "all", label: "All Products" },
+  { id: "clubs", label: "Clubs" },
+  { id: "balls", label: "Balls" },
+  { id: "apparel", label: "Apparel" },
+  { id: "bags", label: "Bags" },
+  { id: "accessories", label: "Accessories" }
+];
