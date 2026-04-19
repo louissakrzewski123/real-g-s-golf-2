@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Order — Real G's Golf Cap</title>
+<meta name="description" content="Pre-order the Real G's Golf Cap. Exclusive pre-order access only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --dark2: #1a1a1a;
+  --dark3: #242424;
+  --grey: #888888;
+  --light-grey: #cccccc;
+  --white: #f5f5f0;
+  --accent: #c8a96e;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-condensed: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--dark3); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 68px; max-width: 1280px; margin: 0 auto; }
+.logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; color: var(--white); line-height: 1; }
+.logo span { display: block; font-size: 0.75rem; font-family: var(--font-condensed); letter-spacing: 0.25em; color: var(--accent); font-weight: 400; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { font-family: var(--font-condensed); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light-grey); transition: color var(--transition); }
+.nav-links a:hover { color: var(--white); }
+
+/* PRE-ORDER BANNER */
+.preorder-banner {
+  background: var(--accent);
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-condensed);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-top: 68px;
+}
+
+/* LAYOUT */
+.page-wrap { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 6rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+
+/* IMAGES */
+.cap-images { position: sticky; top: 88px; }
+.cap-main-img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--dark2); display: block; }
+.cap-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 4px; }
+.cap-thumb { aspect-ratio: 1; object-fit: cover; cursor: pointer; opacity: 0.6; transition: opacity var(--transition); border: 2px solid transparent; }
+.cap-thumb:hover, .cap-thumb.active { opacity: 1; border-color: var(--accent); }
+
+/* PRODUCT INFO */
+.product-info { }
+.eyebrow { font-family: var(--font-condensed); font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+.product-title { font-family: var(--font-display); font-size: clamp(3rem, 5vw, 5rem); line-height: 0.9; color: var(--white); margin-bottom: 1rem; }
+.product-desc { color: var(--grey); font-size: 0.9rem; line-height: 1.8; margin-bottom: 2rem; border-bottom: 1px solid var(--dark3); padding-bottom: 2rem; }
+
+.price-block { margin-bottom: 2rem; }
+.price-main { font-family: var(--font-display); font-size: 2.5rem; color: var(--accent); line-height: 1; }
+.price-sub { font-family: var(--font-condensed); font-size: 0.8rem; letter-spacing: 0.1em; color: var(--grey); margin-top: 0.25rem; }
+
+/* CODE GATE */
+.code-gate { margin-bottom: 2rem; }
+.code-gate label { font-family: var(--font-condensed); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-grey); display: block; margin-bottom: 0.5rem; }
+.code-input-wrap { display: flex; gap: 0; }
+.code-input-wrap input { flex: 1; background: var(--dark); border: 1px solid var(--dark3); border-right: none; color: var(--white); font-family: var(--font-body); font-size: 0.95rem; padding: 0.85rem 1rem; outline: none; letter-spacing: 0.05em; transition: border-color var(--transition); text-transform: uppercase; }
+.code-input-wrap input:focus { border-color: var(--accent); }
+.code-input-wrap input::placeholder { color: var(--grey); text-transform: none; letter-spacing: 0; }
+.code-btn { background: var(--accent); color: var(--black); font-family: var(--font-condensed); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 1.5rem; border: none; cursor: pointer; transition: var(--transition); white-space: nowrap; }
+.code-btn:hover { background: var(--white); }
+.code-error { font-size: 0.8rem; color: #c0392b; margin-top: 0.5rem; min-height: 1rem; }
+.code-success { font-size: 0.8rem; color: #27ae60; margin-top: 0.5rem; }
+
+.no-code-msg { background: var(--dark); border: 1px solid var(--dark3); padding: 1.25rem; margin-top: 1rem; }
+.no-code-msg p { font-size: 0.85rem; color: var(--grey); line-height: 1.6; }
+.no-code-msg a { color: var(--accent); font-weight: 500; }
+
+/* ORDER FORM (hidden until code validated) */
+.order-form { display: none; }
+.order-form.visible { display: block; }
+
+.form-section { margin-bottom: 1.75rem; }
+.form-section-title { font-family: var(--font-condensed); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--dark3); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.form-grid.full { grid-template-columns: 1fr; }
+.form-group { }
+.form-group label { font-family: var(--font-condensed); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--light-grey); display: block; margin-bottom: 0.4rem; }
+.form-group input, .form-group select { width: 100%; background: var(--dark); border: 1px solid var(--dark3); color: var(--white); font-family: var(--font-body); font-size: 0.9rem; padding: 0.8rem 1rem; outline: none; transition: border-color var(--transition); }
+.form-group input:focus { border-color: var(--accent); }
+.form-group input::placeholder { color: var(--grey); }
+.form-group select { cursor: pointer; }
+.form-group select option { background: var(--dark); }
+
+/* ORDER SUMMARY */
+.order-summary { background: var(--dark2); border: 1px solid var(--dark3); padding: 1.25rem; margin-bottom: 1.5rem; }
+.summary-line { display: flex; justify-content: space-between; font-size: 0.875rem; color: var(--grey); margin-bottom: 0.5rem; }
+.summary-line.total { color: var(--white); font-family: var(--font-condensed); font-size: 1rem; font-weight: 600; padding-top: 0.75rem; margin-top: 0.25rem; border-top: 1px solid var(--dark3); }
+
+/* PAYMENT */
+#payment-element { background: var(--dark); border: 1px solid var(--dark3); padding: 1.25rem; margin-bottom: 1rem; }
+.pay-btn { width: 100%; background: var(--accent); color: var(--black); font-family: var(--font-condensed); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1.1rem; border: none; cursor: pointer; transition: var(--transition); }
+.pay-btn:hover { background: var(--white); }
+.pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.pay-error { color: #c0392b; font-size: 0.85rem; margin-top: 0.75rem; min-height: 1rem; }
+.secure-note { font-size: 0.75rem; color: var(--grey); text-align: center; margin-top: 0.75rem; }
+
+/* SUCCESS STATE */
+.success-wrap { display: none; text-align: center; padding: 4rem 2rem; }
+.success-wrap.visible { display: block; }
+.success-icon { width: 64px; height: 64px; border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent); }
+.success-wrap h2 { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1rem; }
+.success-wrap p { color: var(--grey); max-width: 400px; margin: 0 auto; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .page-wrap { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.25rem 4rem; }
+  .cap-images { position: static; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
+    <div class="nav-links">
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="preorder-banner">⚡ Pre-Order Only — Exclusive Early Access</div>
+
+<div class="page-wrap">
+
+  <!-- IMAGES -->
+  <div class="cap-images">
+    <img class="cap-main-img" id="mainImg" src="images/cap-primary.jpeg" alt="Real G's Golf Cap">
+    <div class="cap-thumbs">
+      <img class="cap-thumb active" src="images/cap-primary.jpeg" alt="Cap front" onclick="setImg(this)">
+      <img class="cap-thumb" src="images/cap-2.jpeg" alt="Cap side" onclick="setImg(this)">
+      <img class="cap-thumb" src="images/cap-3.jpeg" alt="Cap back" onclick="setImg(this)">
+    </div>
+  </div>
+
+  <!-- PRODUCT + ORDER -->
+  <div>
+    <p class="eyebrow">Limited Pre-Order</p>
+    <h1 class="product-title">REAL G'S<br>GOLF CAP</h1>
+    <p class="product-desc">The inaugural Real G's Golf Cap. Navy with embroidered branding and rope detail. One size fits all. Limited first run — pre-order access only.</p>
+
+    <div class="price-block">
+      <div class="price-main">$39.00</div>
+      <div class="price-sub">+ $6.50 Australia Post · Free returns</div>
+    </div>
+
+    <!-- CODE GATE -->
+    <div class="code-gate" id="codeGate">
+      <label>Enter Your Pre-Order Code</label>
+      <div class="code-input-wrap">
+        <input type="text" id="codeInput" placeholder="e.g. REALG-001" maxlength="20">
+        <button class="code-btn" onclick="validateCode()">Apply</button>
+      </div>
+      <p class="code-error" id="codeError"></p>
+      <div class="no-code-msg">
+        <p>Don't have a code? DM <a href="https://instagram.com/realgsgolf" target="_blank">@realgsgolf</a> on Instagram to get your pre-order access code.</p>
+      </div>
+    </div>
+
+    <!-- ORDER FORM (unlocked after code) -->
+    <div class="order-form" id="orderForm">
+      <p class="code-success" style="margin-bottom:1.5rem;">✓ Code accepted — complete your order below</p>
+
+      <div class="form-section">
+        <div class="form-section-title">Your Details</div>
+        <div class="form-grid">
+          <div class="form-group"><label>First Name</label><input type="text" id="firstName" placeholder="Louis" required></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="lastName" placeholder="Smith" required></div>
+        </div>
+        <div class="form-grid full" style="margin-top:0.75rem;">
+          <div class="form-group"><label>Email</label><input type="email" id="email" placeholder="you@email.com" required></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Shipping Address</div>
+        <div class="form-grid full">
+          <div class="form-group"><label>Street Address</label><input type="text" id="address" placeholder="123 Fairway Drive" required></div>
+        </div>
+        <div class="form-grid" style="margin-top:0.75rem;">
+          <div class="form-group"><label>Suburb</label><input type="text" id="suburb" placeholder="Brisbane" required></div>
+          <div class="form-group"><label>State</label>
+            <select id="state">
+              <option value="">Select state</option>
+              <option>QLD</option><option>NSW</option><option>VIC</option><option>WA</option>
+              <option>SA</option><option>TAS</option><option>ACT</option><option>NT</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid" style="margin-top:0.75rem;">
+          <div class="form-group"><label>Postcode</label><input type="text" id="postcode" placeholder="4000" maxlength="4" required></div>
+          <div class="form-group"><label>Country</label><input type="text" value="Australia" readonly style="opacity:0.5;cursor:not-allowed;"></div>
+        </div>
+      </div>
+
+      <div class="order-summary">
+        <div class="summary-line"><span>Real G's Golf Cap × 1</span><span>$39.00</span></div>
+        <div class="summary-line"><span>Australia Post shipping</span><span>$6.50</span></div>
+        <div class="summary-line total"><span>Total</span><span>$45.50 AUD</span></div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Payment</div>
+        <div id="payment-element"></div>
+        <p id="payError" class="pay-error"></p>
+        <button class="pay-btn" id="payBtn" onclick="submitOrder()">Complete Pre-Order — $45.50</button>
+        <p class="secure-note">🔒 Secured by Stripe · SSL encrypted</p>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-wrap" id="successWrap">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>ORDER CONFIRMED</h2>
+      <p>Your Real G's Golf Cap is on its way. Check your email for confirmation. We'll ship within 3–5 business days.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============================================
+// PRE-ORDER CODES
+// Add/remove codes here as needed
+// ============================================
+const VALID_CODES = [
+  'REALG-001', 'REALG-002', 'REALG-003', 'REALG-004', 'REALG-005',
+  'REALG-006', 'REALG-007', 'REALG-008', 'REALG-009', 'REALG-010',
+  'REALG-011', 'REALG-012', 'REALG-013', 'REALG-014', 'REALG-015',
+  'REALG-016', 'REALG-017', 'REALG-018', 'REALG-019', 'REALG-020'
+];
+
+// ============================================
+// SET TO false TO OPEN TO PUBLIC (no code needed)
+// ============================================
+const PREORDER_MODE = true;
+
+// ============================================
+// STRIPE KEY — replace with your real key
+// ============================================
+const STRIPE_KEY = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE';
+
+let stripeInstance = null;
+let stripeElements = null;
+let codeValidated = false;
+
+// Auto-open if not in preorder mode
+if (!PREORDER_MODE) {
+  document.addEventListener('DOMContentLoaded', () => unlockForm());
+}
+
+// Image switcher
+function setImg(thumb) {
+  document.getElementById('mainImg').src = thumb.src;
+  document.querySelectorAll('.cap-thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+}
+
+// Validate pre-order code
+function validateCode() {
+  const input = document.getElementById('codeInput').value.trim().toUpperCase();
+  const error = document.getElementById('codeError');
+
+  // Check if already used
+  const usedCodes = JSON.parse(localStorage.getItem('rgg_used_codes') || '[]');
+  if (usedCodes.includes(input)) {
+    error.textContent = 'This code has already been used.';
+    return;
+  }
+
+  if (VALID_CODES.includes(input)) {
+    error.textContent = '';
+    codeValidated = true;
+    unlockForm();
+  } else {
+    error.textContent = 'Invalid code. DM @realgsgolf on Instagram to get yours.';
+  }
+}
+
+// Allow Enter key on code input
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('codeInput')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') validateCode();
+  });
+  if (!PREORDER_MODE) unlockForm();
+});
+
+// Unlock the order form and init Stripe
+async function unlockForm() {
+  document.getElementById('codeGate').style.display = 'none';
+  document.getElementById('orderForm').classList.add('visible');
+
+  if (STRIPE_KEY === 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE') {
+    document.getElementById('payment-element').innerHTML =
+      '<p style="color:var(--accent);font-size:0.85rem;padding:0.5rem 0;">⚠ Add your Stripe publishable key to preorder.html to enable payments.</p>';
+    return;
+  }
+
+  try {
+    stripeInstance = Stripe(STRIPE_KEY);
+    const res = await fetch('/api/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: 4550, currency: 'aud' })
+    });
+    const { clientSecret } = await res.json();
+    stripeElements = stripeInstance.elements({ clientSecret, appearance: {
+      theme: 'night',
+      variables: { colorPrimary: '#c8a96e', colorBackground: '#1a1a1a', colorText: '#f5f5f0', fontFamily: 'Barlow, sans-serif', borderRadius: '0px' }
+    }});
+    stripeElements.create('payment').mount('#payment-element');
+  } catch(e) {
+    document.getElementById('payment-element').innerHTML =
+      '<p style="color:#c0392b;font-size:0.85rem;">Payment unavailable. Please try again later.</p>';
+  }
+}
+
+// Submit order
+async function submitOrder() {
+  const btn = document.getElementById('payBtn');
+  const errEl = document.getElementById('payError');
+
+  // Validate fields
+  const fields = ['firstName','lastName','email','address','suburb','state','postcode'];
+  for (const f of fields) {
+    if (!document.getElementById(f).value.trim()) {
+      errEl.textContent = 'Please fill in all fields before completing your order.';
+      return;
+    }
+  }
+
+  if (!stripeInstance || !stripeElements) {
+    errEl.textContent = 'Payment not initialised. Please refresh and try again.';
+    return;
+  }
+
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+  errEl.textContent = '';
+
+  // Save order to localStorage for admin panel
+  const orderCode = document.getElementById('codeInput')?.value.trim().toUpperCase() || 'PUBLIC';
+  const order = {
+    id: 'RGG-' + Date.now(),
+    code: orderCode,
+    customer: {
+      name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+      email: document.getElementById('email').value
+    },
+    shipping: {
+      address: document.getElementById('address').value,
+      suburb: document.getElementById('suburb').value,
+      state: document.getElementById('state').value,
+      postcode: document.getElementById('postcode').value,
+      country: 'Australia'
+    },
+    items: [{ name: "Real G's Golf Cap", quantity: 1, price: 39.00 }],
+    shipping_cost: 6.50,
+    total: 45.50,
+    status: 'pending',
+    createdAt: new Date().toISOString()
+  };
+
+  const { error } = await stripeInstance.confirmPayment({
+    elements: stripeElements,
+    confirmParams: {
+      return_url: window.location.origin + '/preorder-success.html',
+      receipt_email: document.getElementById('email').value,
+      shipping: {
+        name: order.customer.name,
+        address: {
+          line1: order.shipping.address,
+          city: order.shipping.suburb,
+          state: order.shipping.state,
+          postal_code: order.shipping.postcode,
+          country: 'AU'
+        }
+      }
+    }
+  });
+
+  if (error) {
+    errEl.textContent = error.message;
+    btn.textContent = 'Complete Pre-Order — $45.50';
+    btn.disabled = false;
+  } else {
+    // Mark code as used
+    if (codeValidated) {
+      const used = JSON.parse(localStorage.getItem('rgg_used_codes') || '[]');
+      used.push(orderCode);
+      localStorage.setItem('rgg_used_codes', JSON.stringify(used));
+    }
+    // Save order
+    const orders = JSON.parse(localStorage.getItem('rgg_orders') || '[]');
+    orders.push(order);
+    localStorage.setItem('rgg_orders', JSON.stringify(orders));
+  }
+}
+</script>
+</body>
+</html>
