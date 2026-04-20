@@ -10,257 +10,112 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="https://js.stripe.com/v3/"></script>
 <style>
-.cap-page { max-width: 1280px; margin: 0 auto; padding: 6rem 2rem 6rem; padding-top: calc(68px + 3rem); }
+.cap-page { max-width: 1280px; margin: 0 auto; padding: calc(68px + 3rem) 2rem 6rem; }
 .cap-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
 
-/* GALLERY */
 .gallery { position: sticky; top: 88px; }
-.gallery-main {
-  width: 100%;
-  aspect-ratio: 1;
-  overflow: hidden;
-  background: var(--dark2);
-  position: relative;
-}
-.gallery-main img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0; left: 0;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
+.gallery-main { width: 100%; aspect-ratio: 1; overflow: hidden; background: var(--dark2); position: relative; }
+.gallery-main img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.4s ease; }
 .gallery-main img.active { opacity: 1; }
-
-/* SWIPE ARROWS */
-.gallery-arrows {
-  position: absolute;
-  bottom: 1rem; right: 1rem;
-  display: flex;
-  gap: 0.5rem;
-  z-index: 2;
-}
-.gallery-arrow {
-  width: 36px; height: 36px;
-  background: rgba(0,0,0,0.6);
-  border: 1px solid var(--dark3);
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s;
-  font-size: 1rem;
-}
+.gallery-arrows { position: absolute; bottom: 1rem; right: 1rem; display: flex; gap: 0.5rem; z-index: 2; }
+.gallery-arrow { width: 36px; height: 36px; background: rgba(0,0,0,0.6); border: 1px solid var(--dark3); color: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; font-size: 1rem; }
 .gallery-arrow:hover { background: var(--accent); color: var(--black); }
-
-.gallery-thumbs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  margin-top: 4px;
-}
-.gallery-thumb {
-  aspect-ratio: 1;
-  overflow: hidden;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border-color 0.2s;
-}
+.gallery-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 4px; }
+.gallery-thumb { aspect-ratio: 1; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
 .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .gallery-thumb.active { border-color: var(--accent); }
 
-/* PRODUCT INFO */
-.cap-info { }
-.preorder-tag {
-  display: inline-block;
-  background: var(--accent);
-  color: var(--black);
-  font-family: var(--font-condensed);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.9rem;
-  margin-bottom: 1.25rem;
-}
-.cap-title {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 6vw, 6rem);
-  line-height: 0.88;
-  color: var(--white);
-  margin-bottom: 1rem;
-}
-.cap-desc {
-  color: var(--grey);
-  font-size: 0.9rem;
-  line-height: 1.8;
-  margin-bottom: 1.75rem;
-  padding-bottom: 1.75rem;
-  border-bottom: 1px solid var(--dark3);
-}
-.cap-price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-}
-.cap-price {
-  font-family: var(--font-display);
-  font-size: 2.75rem;
-  color: var(--accent);
-  line-height: 1;
-}
-.cap-price-note {
-  font-family: var(--font-condensed);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  color: var(--grey);
-  margin-bottom: 2rem;
-}
-.cap-features {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-.cap-feature {
-  font-family: var(--font-condensed);
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
-  color: var(--grey);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.cap-feature::before {
-  content: '';
-  width: 4px; height: 4px;
-  background: var(--accent);
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+.preorder-tag { display: inline-block; background: var(--accent); color: var(--black); font-family: var(--font-condensed); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.9rem; margin-bottom: 1.25rem; }
+.cap-title { font-family: var(--font-display); font-size: clamp(3.5rem, 6vw, 6rem); line-height: 0.88; color: var(--white); margin-bottom: 1rem; }
+.cap-desc { color: var(--grey); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.75rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--dark3); }
+.cap-price { font-family: var(--font-display); font-size: 2.75rem; color: var(--accent); line-height: 1; margin-bottom: 0.4rem; }
+.cap-price-note { font-family: var(--font-condensed); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--grey); margin-bottom: 1.75rem; }
+.cap-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 2rem; }
+.cap-feature { font-family: var(--font-condensed); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--grey); display: flex; align-items: center; gap: 0.5rem; }
+.cap-feature::before { content: ''; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
 
 /* CODE GATE */
-.code-section { margin-bottom: 1.5rem; }
-.field-label {
-  font-family: var(--font-condensed);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--light-grey);
-  display: block;
-  margin-bottom: 0.5rem;
-}
+.field-label { font-family: var(--font-condensed); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-grey); display: block; margin-bottom: 0.5rem; }
 .code-row { display: flex; }
-.code-row input {
-  flex: 1;
-  background: var(--dark);
-  border: 1px solid var(--dark3);
-  border-right: none;
-  color: var(--white);
-  font-family: var(--font-condensed);
-  font-size: 1rem;
-  letter-spacing: 0.1em;
-  padding: 0.85rem 1rem;
-  outline: none;
-  text-transform: uppercase;
-  transition: border-color 0.2s;
-}
+.code-row input { flex: 1; background: var(--dark); border: 1px solid var(--dark3); border-right: none; color: var(--white); font-family: var(--font-condensed); font-size: 1rem; letter-spacing: 0.1em; padding: 0.85rem 1rem; outline: none; text-transform: uppercase; transition: border-color 0.2s; }
 .code-row input::placeholder { text-transform: none; letter-spacing: 0; color: var(--grey); font-size: 0.875rem; }
 .code-row input:focus { border-color: var(--accent); }
-.code-row button {
-  background: var(--accent);
-  color: var(--black);
-  font-family: var(--font-condensed);
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0 1.5rem;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
-  white-space: nowrap;
-}
+.code-row button { background: var(--accent); color: var(--black); font-family: var(--font-condensed); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 1.5rem; border: none; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
 .code-row button:hover { background: var(--white); }
 .code-msg { font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2rem; }
 .code-msg.error { color: #e74c3c; }
 .code-msg.success { color: #2ecc71; }
-
-.no-code-box {
-  background: var(--dark);
-  border: 1px solid var(--dark3);
-  padding: 1rem 1.25rem;
-  margin-top: 0.75rem;
-  font-size: 0.85rem;
-  color: var(--grey);
-  line-height: 1.6;
-}
+.no-code-box { background: var(--dark); border: 1px solid var(--dark3); padding: 1rem 1.25rem; margin-top: 0.75rem; font-size: 0.85rem; color: var(--grey); line-height: 1.6; }
 .no-code-box a { color: var(--accent); font-weight: 500; }
 
 /* ORDER FORM */
 .order-form { display: none; margin-top: 0; }
 .order-form.open { display: block; }
-.form-divider {
-  font-family: var(--font-condensed);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--dark3);
-  margin: 1.5rem 0 1rem;
-}
+.form-divider { font-family: var(--font-condensed); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); padding-bottom: 0.6rem; border-bottom: 1px solid var(--dark3); margin: 1.5rem 0 1rem; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
 .field-row.full { grid-template-columns: 1fr; }
 .field-group { display: flex; flex-direction: column; }
-.field-group input, .field-group select {
-  background: var(--dark);
-  border: 1px solid var(--dark3);
-  color: var(--white);
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  padding: 0.75rem 1rem;
-  outline: none;
-  transition: border-color 0.2s;
-  margin-top: 0.4rem;
-}
+.field-group input, .field-group select { background: var(--dark); border: 1px solid var(--dark3); color: var(--white); font-family: var(--font-body); font-size: 0.875rem; padding: 0.75rem 1rem; outline: none; transition: border-color 0.2s; margin-top: 0.4rem; }
 .field-group input:focus { border-color: var(--accent); }
 .field-group input::placeholder { color: var(--grey); }
 .field-group select { cursor: pointer; }
 .field-group select option { background: var(--dark2); }
 
-.order-total {
-  background: var(--dark2);
-  border: 1px solid var(--dark3);
+/* DELIVERY TOGGLE */
+.delivery-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 1.5rem; border: 1px solid var(--dark3); }
+.delivery-opt {
   padding: 1rem 1.25rem;
-  margin: 1rem 0;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-right: 1px solid var(--dark3);
+  position: relative;
 }
+.delivery-opt:last-child { border-right: none; }
+.delivery-opt.active { background: var(--dark2); }
+.delivery-opt.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+.delivery-opt input[type="radio"] { display: none; }
+.delivery-opt-title {
+  font-family: var(--font-condensed);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+.delivery-opt.active .delivery-opt-title { color: var(--accent); }
+.delivery-opt-price {
+  font-family: var(--font-condensed);
+  font-size: 0.8rem;
+  color: var(--grey);
+  letter-spacing: 0.05em;
+}
+
+/* PICKUP INFO BOX */
+.pickup-info {
+  background: var(--dark);
+  border: 1px solid var(--dark3);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+.pickup-info.visible { display: block; }
+.pickup-info p { font-size: 0.875rem; color: var(--grey); line-height: 1.7; }
+.pickup-info strong { color: var(--white); }
+
+.order-total { background: var(--dark2); border: 1px solid var(--dark3); padding: 1rem 1.25rem; margin: 1rem 0; }
 .total-row { display: flex; justify-content: space-between; font-size: 0.875rem; color: var(--grey); margin-bottom: 0.4rem; }
 .total-row.grand { color: var(--white); font-family: var(--font-condensed); font-size: 1rem; font-weight: 600; border-top: 1px solid var(--dark3); padding-top: 0.6rem; margin-top: 0.4rem; }
 
-#payment-element {
-  background: var(--dark);
-  border: 1px solid var(--dark3);
-  padding: 1.25rem;
-  margin-bottom: 0.75rem;
-}
+#payment-element { background: var(--dark); border: 1px solid var(--dark3); padding: 1.25rem; margin-bottom: 0.75rem; }
 .pay-error { color: #e74c3c; font-size: 0.8rem; margin-bottom: 0.75rem; min-height: 1rem; }
-.pay-btn {
-  width: 100%;
-  background: var(--accent);
-  color: var(--black);
-  font-family: var(--font-condensed);
-  font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 1.1rem;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+.pay-btn { width: 100%; background: var(--accent); color: var(--black); font-family: var(--font-condensed); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 1.1rem; border: none; cursor: pointer; transition: background 0.2s; }
 .pay-btn:hover { background: var(--white); }
 .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .secure { font-size: 0.75rem; color: var(--grey); text-align: center; margin-top: 0.6rem; }
@@ -279,7 +134,7 @@
   <div class="nav-inner">
     <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
     <ul class="nav-links">
-      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cap.html">Shop</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -292,7 +147,7 @@
     </div>
   </div>
   <div class="nav-mobile" id="navMobile">
-    <a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+    <a href="cap.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a>
   </div>
 </nav>
 
@@ -323,10 +178,8 @@
       <h1 class="cap-title">REAL G'S<br>GOLF CAP</h1>
       <p class="cap-desc">The inaugural Real G's Golf Cap. Navy with embroidered branding and rope brim detail. One size fits all. First run only — once they're gone, they're gone.</p>
 
-      <div class="cap-price-row">
-        <span class="cap-price">$39.00</span>
-      </div>
-      <p class="cap-price-note">+ $6.50 Australia Post · Ships within 3–5 business days</p>
+      <div class="cap-price" id="displayPrice">$39.00</div>
+      <p class="cap-price-note" id="priceNote">Select delivery option below</p>
 
       <div class="cap-features">
         <div class="cap-feature">Embroidered branding</div>
@@ -338,7 +191,7 @@
       </div>
 
       <!-- CODE GATE -->
-      <div class="code-section" id="codeSection">
+      <div id="codeSection">
         <label class="field-label">Pre-Order Access Code</label>
         <div class="code-row">
           <input type="text" id="codeInput" placeholder="Enter your code e.g. REALG-001" maxlength="20">
@@ -350,7 +203,7 @@
         </div>
       </div>
 
-      <!-- ORDER FORM (shown after code) -->
+      <!-- ORDER FORM -->
       <div class="order-form" id="orderForm">
         <p style="font-size:0.85rem;color:#2ecc71;margin-bottom:1.25rem;">✓ Code accepted — complete your order below</p>
 
@@ -363,45 +216,69 @@
           <div class="field-group"><label class="field-label">Email</label><input type="email" id="email" placeholder="you@email.com"></div>
         </div>
 
-        <div class="form-divider">Shipping Address</div>
-        <div class="field-row full">
-          <div class="field-group"><label class="field-label">Street Address</label><input type="text" id="address" placeholder="123 Fairway Drive"></div>
+        <!-- DELIVERY TOGGLE -->
+        <div class="form-divider">Delivery Method</div>
+        <div class="delivery-toggle">
+          <label class="delivery-opt active" id="optPostage" onclick="selectDelivery('postage')">
+            <input type="radio" name="delivery" value="postage" checked>
+            <div class="delivery-opt-title">Postage</div>
+            <div class="delivery-opt-price">$39.00 + $6.50 shipping</div>
+          </label>
+          <label class="delivery-opt" id="optPickup" onclick="selectDelivery('pickup')">
+            <input type="radio" name="delivery" value="pickup">
+            <div class="delivery-opt-title">Pick Up</div>
+            <div class="delivery-opt-price">$39.00 — free</div>
+          </label>
         </div>
-        <div class="field-row">
-          <div class="field-group"><label class="field-label">Suburb</label><input type="text" id="suburb" placeholder="Brisbane"></div>
-          <div class="field-group"><label class="field-label">State</label>
-            <select id="state">
-              <option value="">Select state</option>
-              <option>QLD</option><option>NSW</option><option>VIC</option><option>WA</option>
-              <option>SA</option><option>TAS</option><option>ACT</option><option>NT</option>
-            </select>
+
+        <!-- PICKUP INFO -->
+        <div class="pickup-info" id="pickupInfo">
+          <p><strong>Pick up selected.</strong> Once your order is confirmed, Real G's will contact you via your email address to arrange pick up details.</p>
+        </div>
+
+        <!-- POSTAGE FIELDS -->
+        <div id="postageFields">
+          <div class="form-divider">Shipping Address</div>
+          <div class="field-row full">
+            <div class="field-group"><label class="field-label">Street Address</label><input type="text" id="address" placeholder="123 Fairway Drive"></div>
+          </div>
+          <div class="field-row">
+            <div class="field-group"><label class="field-label">Suburb</label><input type="text" id="suburb" placeholder="Brisbane"></div>
+            <div class="field-group"><label class="field-label">State</label>
+              <select id="state">
+                <option value="">Select state</option>
+                <option>QLD</option><option>NSW</option><option>VIC</option><option>WA</option>
+                <option>SA</option><option>TAS</option><option>ACT</option><option>NT</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-group"><label class="field-label">Postcode</label><input type="text" id="postcode" placeholder="4000" maxlength="4"></div>
+            <div class="field-group"><label class="field-label">Country</label><input type="text" value="Australia" readonly style="opacity:0.4;cursor:not-allowed"></div>
           </div>
         </div>
-        <div class="field-row">
-          <div class="field-group"><label class="field-label">Postcode</label><input type="text" id="postcode" placeholder="4000" maxlength="4"></div>
-          <div class="field-group"><label class="field-label">Country</label><input type="text" value="Australia" readonly style="opacity:0.4;cursor:not-allowed"></div>
+
+        <!-- ORDER TOTAL -->
+        <div class="order-total">
+          <div class="total-row"><span>Real G's Golf Cap × 1</span><span>$39.00</span></div>
+          <div class="total-row" id="shippingRow"><span>Australia Post</span><span>$6.50</span></div>
+          <div class="total-row grand"><span>Total</span><span id="grandTotal">$45.50 AUD</span></div>
         </div>
 
         <div class="form-divider">Payment</div>
-        <div class="order-total">
-          <div class="total-row"><span>Real G's Golf Cap × 1</span><span>$39.00</span></div>
-          <div class="total-row"><span>Australia Post</span><span>$6.50</span></div>
-          <div class="total-row grand"><span>Total</span><span>$45.50 AUD</span></div>
-        </div>
         <div id="payment-element"></div>
         <p class="pay-error" id="payError"></p>
-        <button class="pay-btn" id="payBtn" onclick="submitOrder()">Complete Pre-Order — $45.50</button>
+        <button class="pay-btn" id="payBtn" onclick="submitOrder()">Complete Pre-Order — <span id="btnAmount">$45.50</span></button>
         <p class="secure">🔒 Secured by Stripe · SSL encrypted</p>
       </div>
     </div>
-
   </div>
 </div>
 
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand"><a href="index.html" class="logo">REAL G'S<span>GOLF</span></a><p>Premium golf gear for serious players.</p></div>
-    <div class="footer-links"><h4>Shop</h4><a href="index.html">Home</a><a href="contact.html">Contact</a></div>
+    <div class="footer-links"><h4>Shop</h4><a href="cap.html">Golf Cap</a></div>
     <div class="footer-links"><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="shipping.html">Shipping</a></div>
   </div>
   <div class="footer-bottom"><p>&copy; 2025 Real G's Golf. All rights reserved.</p></div>
@@ -411,10 +288,7 @@
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
 <script>
-// ============================================
-// CONFIG — edit these
-// ============================================
-const PREORDER_MODE = true; // set false to open to public
+const PREORDER_MODE = true;
 const STRIPE_KEY = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE';
 const VALID_CODES = [
   'REALG-001','REALG-002','REALG-003','REALG-004','REALG-005',
@@ -425,27 +299,51 @@ const VALID_CODES = [
 
 let currentImg = 0;
 let stripeInstance, stripeElements;
+let deliveryMethod = 'postage';
 
-// IMAGE GALLERY
+// GALLERY
 function goToImg(i) {
-  const imgs = document.querySelectorAll('.gallery-main img');
-  const thumbs = document.querySelectorAll('.gallery-thumb');
-  imgs.forEach(img => img.classList.remove('active'));
-  thumbs.forEach(t => t.classList.remove('active'));
-  imgs[i].classList.add('active');
-  thumbs[i].classList.add('active');
+  document.querySelectorAll('.gallery-main img').forEach(img => img.classList.remove('active'));
+  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.gallery-main img')[i].classList.add('active');
+  document.querySelectorAll('.gallery-thumb')[i].classList.add('active');
   currentImg = i;
 }
 function nextImg() { goToImg((currentImg + 1) % 3); }
 function prevImg() { goToImg((currentImg + 2) % 3); }
 
-// Touch swipe support
 let touchStartX = 0;
 document.getElementById('galleryMain').addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
 document.getElementById('galleryMain').addEventListener('touchend', e => {
   const diff = touchStartX - e.changedTouches[0].clientX;
   if (Math.abs(diff) > 40) diff > 0 ? nextImg() : prevImg();
 });
+
+// DELIVERY TOGGLE
+function selectDelivery(method) {
+  deliveryMethod = method;
+  document.getElementById('optPostage').classList.toggle('active', method === 'postage');
+  document.getElementById('optPickup').classList.toggle('active', method === 'pickup');
+  document.getElementById('postageFields').style.display = method === 'postage' ? 'block' : 'none';
+  document.getElementById('pickupInfo').classList.toggle('visible', method === 'pickup');
+
+  if (method === 'postage') {
+    document.getElementById('shippingRow').style.display = 'flex';
+    document.getElementById('grandTotal').textContent = '$45.50 AUD';
+    document.getElementById('btnAmount').textContent = '$45.50';
+    document.getElementById('displayPrice').textContent = '$39.00';
+    document.getElementById('priceNote').textContent = '+ $6.50 Australia Post · Ships within 3–5 business days';
+  } else {
+    document.getElementById('shippingRow').style.display = 'none';
+    document.getElementById('grandTotal').textContent = '$39.00 AUD';
+    document.getElementById('btnAmount').textContent = '$39.00';
+    document.getElementById('displayPrice').textContent = '$39.00';
+    document.getElementById('priceNote').textContent = 'Pick up — Real G\'s will contact you to arrange details';
+  }
+
+  // Re-init Stripe with correct amount
+  if (stripeInstance) initStripe();
+}
 
 // CODE VALIDATION
 function validateCode() {
@@ -484,6 +382,8 @@ if (!PREORDER_MODE) {
 
 // STRIPE INIT
 async function initStripe() {
+  const amount = deliveryMethod === 'postage' ? 4550 : 3900;
+
   if (STRIPE_KEY === 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE') {
     document.getElementById('payment-element').innerHTML =
       '<p style="color:var(--accent);font-size:0.85rem;padding:0.5rem 0;">⚠ Add your Stripe key to cap.html to enable payments.</p>';
@@ -494,13 +394,14 @@ async function initStripe() {
     const res = await fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: 4550, currency: 'aud' })
+      body: JSON.stringify({ amount, currency: 'aud' })
     });
     const { clientSecret } = await res.json();
     stripeElements = stripeInstance.elements({ clientSecret, appearance: {
       theme: 'night',
       variables: { colorPrimary: '#c8a96e', colorBackground: '#1a1a1a', colorText: '#f5f5f0', fontFamily: 'Barlow, sans-serif', borderRadius: '0px' }
     }});
+    document.getElementById('payment-element').innerHTML = '';
     stripeElements.create('payment').mount('#payment-element');
   } catch(e) {
     document.getElementById('payment-element').innerHTML =
@@ -512,51 +413,78 @@ async function initStripe() {
 async function submitOrder() {
   const btn = document.getElementById('payBtn');
   const errEl = document.getElementById('payError');
-  const required = ['firstName','lastName','email','address','suburb','state','postcode'];
-  for (const f of required) {
+
+  const baseRequired = ['firstName', 'lastName', 'email'];
+  const postageRequired = ['address', 'suburb', 'state', 'postcode'];
+  const toCheck = deliveryMethod === 'postage' ? [...baseRequired, ...postageRequired] : baseRequired;
+
+  for (const f of toCheck) {
     if (!document.getElementById(f).value.trim()) {
-      errEl.textContent = 'Please fill in all fields.'; return;
+      errEl.textContent = 'Please fill in all required fields.';
+      return;
     }
   }
+
   if (!stripeInstance || !stripeElements) {
-    errEl.textContent = 'Payment not ready. Please refresh.'; return;
+    errEl.textContent = 'Payment not ready. Please refresh.';
+    return;
   }
-  btn.textContent = 'Processing...'; btn.disabled = true; errEl.textContent = '';
+
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+  errEl.textContent = '';
 
   const code = document.getElementById('codeInput')?.value.trim().toUpperCase() || 'PUBLIC';
-  const { error } = await stripeInstance.confirmPayment({
-    elements: stripeElements,
-    confirmParams: {
-      return_url: window.location.origin + '/preorder-success.html',
-      receipt_email: document.getElementById('email').value,
-      shipping: {
-        name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
-        address: {
-          line1: document.getElementById('address').value,
-          city: document.getElementById('suburb').value,
-          state: document.getElementById('state').value,
-          postal_code: document.getElementById('postcode').value,
-          country: 'AU'
-        }
+  const total = deliveryMethod === 'postage' ? 45.50 : 39.00;
+
+  const confirmParams = {
+    return_url: window.location.origin + '/preorder-success.html',
+    receipt_email: document.getElementById('email').value,
+  };
+
+  if (deliveryMethod === 'postage') {
+    confirmParams.shipping = {
+      name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+      address: {
+        line1: document.getElementById('address').value,
+        city: document.getElementById('suburb').value,
+        state: document.getElementById('state').value,
+        postal_code: document.getElementById('postcode').value,
+        country: 'AU'
       }
-    }
-  });
+    };
+  }
+
+  const { error } = await stripeInstance.confirmPayment({ elements: stripeElements, confirmParams });
 
   if (error) {
     errEl.textContent = error.message;
-    btn.textContent = 'Complete Pre-Order — $45.50';
+    btn.textContent = `Complete Pre-Order — ${deliveryMethod === 'postage' ? '$45.50' : '$39.00'}`;
     btn.disabled = false;
   } else {
+    // Mark code used + save order
     const used = JSON.parse(localStorage.getItem('rgg_used_codes') || '[]');
     used.push(code);
     localStorage.setItem('rgg_used_codes', JSON.stringify(used));
+
     const orders = JSON.parse(localStorage.getItem('rgg_orders') || '[]');
     orders.push({
       id: 'RGG-' + Date.now(), code,
-      customer: { name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`, email: document.getElementById('email').value },
-      shipping: { address: document.getElementById('address').value, suburb: document.getElementById('suburb').value, state: document.getElementById('state').value, postcode: document.getElementById('postcode').value },
+      delivery: deliveryMethod,
+      customer: {
+        name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+        email: document.getElementById('email').value
+      },
+      shipping: deliveryMethod === 'postage' ? {
+        address: document.getElementById('address').value,
+        suburb: document.getElementById('suburb').value,
+        state: document.getElementById('state').value,
+        postcode: document.getElementById('postcode').value,
+        country: 'Australia'
+      } : { note: 'Pick up — contact customer via email' },
       items: [{ name: "Real G's Golf Cap", quantity: 1, price: 39 }],
-      total: 45.50, status: 'pending', createdAt: new Date().toISOString()
+      total, status: 'pending',
+      createdAt: new Date().toISOString()
     });
     localStorage.setItem('rgg_orders', JSON.stringify(orders));
   }
