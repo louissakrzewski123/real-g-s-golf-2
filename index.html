@@ -8,15 +8,163 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+/* Coming soon card styles */
+.coming-soon-card {
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+}
+.coming-soon-img {
+  flex: 1;
+  background: var(--dark2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.coming-soon-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255,255,255,0.015) 10px,
+    rgba(255,255,255,0.015) 11px
+  );
+}
+.coming-soon-label {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  color: var(--dark3);
+  position: relative;
+  z-index: 1;
+}
+.coming-soon-info {
+  padding: 1.25rem 1.25rem 1.5rem;
+  border-top: 1px solid var(--dark3);
+}
+.coming-soon-badge {
+  font-family: var(--font-condensed);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 0.4rem;
+}
+.coming-soon-name {
+  font-family: var(--font-condensed);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--mid);
+  margin-bottom: 0.5rem;
+}
+.coming-soon-price {
+  font-family: var(--font-condensed);
+  font-size: 0.85rem;
+  color: var(--dark3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Cap card override */
+.cap-card {
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.cap-card:hover .cap-card-img img { transform: scale(1.06); }
+.cap-card:hover .cap-card-overlay { opacity: 1; }
+.cap-card-img {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--dark2);
+}
+.cap-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+.cap-card-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  bottom: 56px;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: var(--transition);
+}
+.cap-card-overlay span {
+  background: var(--accent);
+  color: var(--black);
+  font-family: var(--font-condensed);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.75rem;
+}
+.cap-card-badge {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  background: var(--accent);
+  color: var(--black);
+  font-family: var(--font-condensed);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  z-index: 2;
+}
+.cap-card-info {
+  padding: 1.25rem 1.25rem 1.5rem;
+  border-top: 1px solid var(--dark3);
+}
+.cap-card-category {
+  font-family: var(--font-condensed);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.cap-card-name {
+  font-family: var(--font-condensed);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.cap-card-price {
+  font-family: var(--font-condensed);
+  font-size: 1rem;
+  color: var(--light-grey);
+}
+</style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
     <ul class="nav-links">
-      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cap.html">Shop</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
@@ -25,13 +173,11 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
         <span class="cart-count" id="cartCount">0</span>
       </a>
-      <button class="nav-toggle" id="navToggle">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
     </div>
   </div>
   <div class="nav-mobile" id="navMobile">
-    <a href="shop.html">Shop</a>
+    <a href="cap.html">Shop</a>
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -41,10 +187,10 @@
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Premium Golf Gear</p>
+    <p class="hero-eyebrow">Now Available — Pre-Order</p>
     <h1 class="hero-title">PLAY LIKE<br>A REAL G</h1>
-    <p class="hero-sub">Top-tier golf equipment and apparel.<br>Shipped across Australia and worldwide.</p>
-    <a href="shop.html" class="btn-primary">Shop Now</a>
+    <p class="hero-sub">The inaugural Real G's Golf Cap is here. Exclusive pre-order access only.</p>
+    <a href="cap.html" class="btn-primary">Pre-Order Now</a>
   </div>
   <div class="hero-scroll">
     <span>Scroll</span>
@@ -55,23 +201,17 @@
 <!-- MARQUEE -->
 <div class="marquee">
   <div class="marquee-track">
-    <span>FREE SHIPPING OVER $150 AUD</span>
+    <span>PRE-ORDER NOW — LIMITED DROP</span>
     <span>·</span>
-    <span>WORLDWIDE DELIVERY</span>
+    <span>AUSTRALIA POST TRACKED SHIPPING</span>
     <span>·</span>
-    <span>PREMIUM GOLF GEAR</span>
+    <span>EXCLUSIVE ACCESS ONLY</span>
     <span>·</span>
-    <span>FREE SHIPPING OVER $150 AUD</span>
+    <span>PRE-ORDER NOW — LIMITED DROP</span>
     <span>·</span>
-    <span>WORLDWIDE DELIVERY</span>
+    <span>AUSTRALIA POST TRACKED SHIPPING</span>
     <span>·</span>
-    <span>PREMIUM GOLF GEAR</span>
-    <span>·</span>
-    <span>FREE SHIPPING OVER $150 AUD</span>
-    <span>·</span>
-    <span>WORLDWIDE DELIVERY</span>
-    <span>·</span>
-    <span>PREMIUM GOLF GEAR</span>
+    <span>EXCLUSIVE ACCESS ONLY</span>
     <span>·</span>
   </div>
 </div>
@@ -80,14 +220,49 @@
 <section class="section featured">
   <div class="container">
     <div class="section-header">
-      <p class="section-eyebrow">New Arrivals</p>
-      <h2 class="section-title">FEATURED GEAR</h2>
+      <p class="section-eyebrow">Available Now</p>
+      <h2 class="section-title">THE DROP</h2>
     </div>
-    <div class="products-grid" id="featuredGrid">
-      <!-- Populated by JS -->
-    </div>
-    <div class="section-cta">
-      <a href="shop.html" class="btn-secondary">View All Products</a>
+    <div class="products-grid">
+
+      <!-- CAP CARD -->
+      <a href="cap.html" class="cap-card">
+        <div class="cap-card-img">
+          <img src="images/cap-primary.jpeg" alt="Real G's Golf Cap">
+        </div>
+        <div class="cap-card-badge">Pre-Order</div>
+        <div class="cap-card-overlay"><span>Pre-Order Now</span></div>
+        <div class="cap-card-info">
+          <p class="cap-card-category">Headwear</p>
+          <p class="cap-card-name">Real G's Golf Cap</p>
+          <p class="cap-card-price">$39.00 AUD</p>
+        </div>
+      </a>
+
+      <!-- COMING SOON 1 -->
+      <div class="coming-soon-card">
+        <div class="coming-soon-img">
+          <span class="coming-soon-label">COMING SOON</span>
+        </div>
+        <div class="coming-soon-info">
+          <p class="coming-soon-badge">Accessories</p>
+          <p class="coming-soon-name">More drops incoming</p>
+          <p class="coming-soon-price">Stay tuned</p>
+        </div>
+      </div>
+
+      <!-- COMING SOON 2 -->
+      <div class="coming-soon-card">
+        <div class="coming-soon-img">
+          <span class="coming-soon-label">COMING SOON</span>
+        </div>
+        <div class="coming-soon-info">
+          <p class="coming-soon-badge">Apparel</p>
+          <p class="coming-soon-name">More drops incoming</p>
+          <p class="coming-soon-price">Stay tuned</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -100,29 +275,29 @@
         <div class="value-icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
         </div>
-        <h3>Fast Shipping</h3>
-        <p>Australia-wide delivery. Free shipping on orders over $150 AUD.</p>
+        <h3>Australia Post</h3>
+        <p>Tracked shipping across Australia. $6.50 flat rate, ships within 3–5 business days.</p>
       </div>
       <div class="value-item">
         <div class="value-icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <h3>Secure Checkout</h3>
-        <p>256-bit SSL encryption. Pay with card, Apple Pay or Google Pay.</p>
+        <p>256-bit SSL encryption. Pay with card, Apple Pay or Google Pay via Stripe.</p>
       </div>
       <div class="value-item">
         <div class="value-icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
         </div>
         <h3>Easy Returns</h3>
-        <p>30-day hassle-free returns on all products. No questions asked.</p>
+        <p>30-day hassle-free returns. Not happy? We'll sort it out, no questions asked.</p>
       </div>
       <div class="value-item">
         <div class="value-icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
         </div>
-        <h3>Worldwide Delivery</h3>
-        <p>We ship globally. Track your order every step of the way.</p>
+        <h3>More Drops Coming</h3>
+        <p>Golf gear, apparel and accessories dropping soon. Follow @realgsgolf for updates.</p>
       </div>
     </div>
   </div>
@@ -134,14 +309,14 @@
     <div class="about-strip-text">
       <p class="section-eyebrow">Our Story</p>
       <h2>BUILT FOR THOSE<br>WHO TAKE THEIR<br>GAME SERIOUSLY</h2>
-      <p>Real G's Golf was built for golfers who demand the best — on the course and off it. We source premium gear so you can focus on what matters: your game.</p>
+      <p>Real G's Golf was built for golfers who demand the best — on the course and off it. Starting with the inaugural cap drop, we're building a brand around the game we love.</p>
       <a href="about.html" class="btn-primary">Learn More</a>
     </div>
     <div class="about-strip-visual">
       <div class="about-box">
-        <div class="about-stat"><span class="stat-num">100+</span><span class="stat-label">Products</span></div>
+        <div class="about-stat"><span class="stat-num">1st</span><span class="stat-label">Drop</span></div>
         <div class="about-stat"><span class="stat-num">AU</span><span class="stat-label">Based</span></div>
-        <div class="about-stat"><span class="stat-num">24h</span><span class="stat-label">Support</span></div>
+        <div class="about-stat"><span class="stat-num">Ltd</span><span class="stat-label">Edition</span></div>
       </div>
     </div>
   </div>
@@ -150,8 +325,8 @@
 <!-- NEWSLETTER -->
 <section class="newsletter">
   <div class="container">
-    <h2>GET 10% OFF YOUR FIRST ORDER</h2>
-    <p>Join the Real G's list for exclusive drops, deals and golf content.</p>
+    <h2>BE FIRST FOR THE NEXT DROP</h2>
+    <p>Join the Real G's list for exclusive access, early drops and golf content.</p>
     <form class="newsletter-form" id="newsletterForm">
       <input type="email" placeholder="Your email address" required>
       <button type="submit" class="btn-primary">Subscribe</button>
@@ -165,21 +340,18 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <a href="index.html" class="logo">REAL G'S<span>GOLF</span></a>
-      <p>Premium golf gear for serious players. Shipped from Australia, delivered worldwide.</p>
+      <p>Premium golf gear for serious players. Based in Australia.</p>
     </div>
     <div class="footer-links">
       <h4>Shop</h4>
-      <a href="shop.html">All Products</a>
-      <a href="shop.html?cat=clubs">Clubs</a>
-      <a href="shop.html?cat=balls">Balls</a>
-      <a href="shop.html?cat=apparel">Apparel</a>
+      <a href="cap.html">Real G's Golf Cap</a>
     </div>
     <div class="footer-links">
       <h4>Info</h4>
       <a href="about.html">About Us</a>
       <a href="contact.html">Contact</a>
-      <a href="shipping.html">Shipping Policy</a>
-      <a href="returns.html">Returns Policy</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="returns.html">Returns</a>
     </div>
     <div class="footer-links">
       <h4>Legal</h4>
@@ -188,7 +360,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2025 Real G's Golf. All rights reserved. ABN: [YOUR ABN]</p>
+    <p>&copy; 2025 Real G's Golf. All rights reserved.</p>
   </div>
 </footer>
 
