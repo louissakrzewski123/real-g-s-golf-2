@@ -30,12 +30,38 @@ p { color: var(--grey); margin-bottom: 0.75rem; font-size: 0.9rem; line-height: 
   <h1>YOU'RE IN THE CLUB</h1>
   <div class="details">
     <p><strong>Real G's Golf Cap × 1</strong></p>
-    <p style="margin-top:0.5rem">Total charged: <strong>$45.50 AUD</strong></p>
+    <p style="margin-top:0.5rem">Total charged: <strong id="totalAmount">$39.00 AUD</strong></p>
+    <p style="margin-top:0.5rem" id="deliveryNote"></p>
     <p style="margin-top:0.5rem">A confirmation receipt has been sent to your email.</p>
   </div>
-  <p>Your cap will be shipped via Australia Post within 3–5 business days. You'll receive a tracking number once dispatched.</p>
+  <p id="shippingMsg"></p>
   <p style="margin-top:0.75rem">Follow us on Instagram <a href="https://instagram.com/realgsgolf" style="color:var(--accent)">@realgsgolf</a> for updates.</p>
   <a href="index.html" class="btn">Back to Home</a>
 </div>
+
+<script>
+// Read order details from localStorage saved before payment
+const orders = JSON.parse(localStorage.getItem('rgg_orders') || '[]');
+const lastOrder = orders[orders.length - 1];
+
+if (lastOrder) {
+  const total = lastOrder.total || 39.00;
+  const delivery = lastOrder.delivery || 'postage';
+
+  document.getElementById('totalAmount').textContent = `$${total.toFixed(2)} AUD`;
+
+  if (delivery === 'pickup') {
+    document.getElementById('deliveryNote').innerHTML = '<strong>Delivery:</strong> Pick Up — Real G\'s will contact you via email to arrange pick up details.';
+    document.getElementById('shippingMsg').textContent = 'Keep an eye on your inbox — we\'ll be in touch shortly to arrange pick up.';
+  } else {
+    document.getElementById('deliveryNote').innerHTML = '<strong>Delivery:</strong> Australia Post tracked shipping.';
+    document.getElementById('shippingMsg').textContent = 'Your cap will be shipped via Australia Post within 3–5 business days. You\'ll receive a tracking number once dispatched.';
+  }
+} else {
+  // Fallback if no order data
+  document.getElementById('totalAmount').textContent = 'See your email receipt for amount';
+  document.getElementById('shippingMsg').textContent = 'Your cap will be shipped or picked up based on your selected delivery method.';
+}
+</script>
 </body>
 </html>
