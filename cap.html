@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Real G's Golf Cap — Pre-Order</title>
-<meta name="description" content="The inaugural Real G's Golf Cap. Pre-order now with your exclusive access code.">
+<title>Real G's Golf Cap — Buy Now</title>
+<meta name="description" content="The Real G's Golf Cap. Navy with embroidered branding and rope detail. Limited stock.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -25,7 +25,11 @@
 .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .gallery-thumb.active { border-color: var(--accent); }
 
-.preorder-tag { display: inline-block; background: var(--accent); color: var(--black); font-family: var(--font-condensed); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.9rem; margin-bottom: 1.25rem; }
+.stock-tag { display: inline-block; font-family: var(--font-condensed); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.9rem; margin-bottom: 1.25rem; }
+.stock-tag.in-stock { background: var(--accent); color: var(--black); }
+.stock-tag.low-stock { background: #e67e22; color: var(--white); }
+.stock-tag.sold-out { background: var(--dark3); color: var(--grey); }
+
 .cap-title { font-family: var(--font-display); font-size: clamp(3.5rem, 6vw, 6rem); line-height: 0.88; color: var(--white); margin-bottom: 1rem; }
 .cap-desc { color: var(--grey); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.75rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--dark3); }
 .cap-price { font-family: var(--font-display); font-size: 2.75rem; color: var(--accent); line-height: 1; margin-bottom: 0.4rem; }
@@ -34,23 +38,7 @@
 .cap-feature { font-family: var(--font-condensed); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--grey); display: flex; align-items: center; gap: 0.5rem; }
 .cap-feature::before { content: ''; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
 
-/* CODE GATE */
 .field-label { font-family: var(--font-condensed); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-grey); display: block; margin-bottom: 0.5rem; }
-.code-row { display: flex; }
-.code-row input { flex: 1; background: var(--dark); border: 1px solid var(--dark3); border-right: none; color: var(--white); font-family: var(--font-condensed); font-size: 1rem; letter-spacing: 0.1em; padding: 0.85rem 1rem; outline: none; text-transform: uppercase; transition: border-color 0.2s; }
-.code-row input::placeholder { text-transform: none; letter-spacing: 0; color: var(--grey); font-size: 0.875rem; }
-.code-row input:focus { border-color: var(--accent); }
-.code-row button { background: var(--accent); color: var(--black); font-family: var(--font-condensed); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 1.5rem; border: none; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-.code-row button:hover { background: var(--white); }
-.code-msg { font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2rem; }
-.code-msg.error { color: #e74c3c; }
-.code-msg.success { color: #2ecc71; }
-.no-code-box { background: var(--dark); border: 1px solid var(--dark3); padding: 1rem 1.25rem; margin-top: 0.75rem; font-size: 0.85rem; color: var(--grey); line-height: 1.6; }
-.no-code-box a { color: var(--accent); font-weight: 500; }
-
-/* ORDER FORM */
-.order-form { display: none; margin-top: 0; }
-.order-form.open { display: block; }
 .form-divider { font-family: var(--font-condensed); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); padding-bottom: 0.6rem; border-bottom: 1px solid var(--dark3); margin: 1.5rem 0 1rem; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
 .field-row.full { grid-template-columns: 1fr; }
@@ -61,50 +49,17 @@
 .field-group select { cursor: pointer; }
 .field-group select option { background: var(--dark2); }
 
-/* DELIVERY TOGGLE */
 .delivery-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 1.5rem; border: 1px solid var(--dark3); }
-.delivery-opt {
-  padding: 1rem 1.25rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  border-right: 1px solid var(--dark3);
-  position: relative;
-}
+.delivery-opt { padding: 1rem 1.25rem; cursor: pointer; transition: background 0.2s; border-right: 1px solid var(--dark3); position: relative; }
 .delivery-opt:last-child { border-right: none; }
 .delivery-opt.active { background: var(--dark2); }
-.delivery-opt.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--accent);
-}
+.delivery-opt.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
 .delivery-opt input[type="radio"] { display: none; }
-.delivery-opt-title {
-  font-family: var(--font-condensed);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--white);
-  margin-bottom: 0.2rem;
-}
+.delivery-opt-title { font-family: var(--font-condensed); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; color: var(--white); margin-bottom: 0.2rem; }
 .delivery-opt.active .delivery-opt-title { color: var(--accent); }
-.delivery-opt-price {
-  font-family: var(--font-condensed);
-  font-size: 0.8rem;
-  color: var(--grey);
-  letter-spacing: 0.05em;
-}
+.delivery-opt-price { font-family: var(--font-condensed); font-size: 0.8rem; color: var(--grey); letter-spacing: 0.05em; }
 
-/* PICKUP INFO BOX */
-.pickup-info {
-  background: var(--dark);
-  border: 1px solid var(--dark3);
-  border-left: 3px solid var(--accent);
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-  display: none;
-}
+.pickup-info { background: var(--dark); border: 1px solid var(--dark3); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; margin-bottom: 1rem; display: none; }
 .pickup-info.visible { display: block; }
 .pickup-info p { font-size: 0.875rem; color: var(--grey); line-height: 1.7; }
 .pickup-info strong { color: var(--white); }
@@ -119,6 +74,10 @@
 .pay-btn:hover { background: var(--white); }
 .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .secure { font-size: 0.75rem; color: var(--grey); text-align: center; margin-top: 0.6rem; }
+
+.sold-out-block { background: var(--dark); border: 1px solid var(--dark3); padding: 2rem; text-align: center; margin-top: 1.5rem; display: none; }
+.sold-out-block h3 { font-family: var(--font-display); font-size: 2rem; color: var(--white); margin-bottom: 0.5rem; }
+.sold-out-block p { font-size: 0.875rem; color: var(--grey); }
 
 @media (max-width: 900px) {
   .cap-layout { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -157,9 +116,9 @@
     <!-- GALLERY -->
     <div class="gallery">
       <div class="gallery-main" id="galleryMain">
-        <img src="images/cap-primary.jpeg" alt="Real G's Golf Cap — front" class="active" data-index="0">
-        <img src="images/cap-2.jpeg" alt="Real G's Golf Cap — side" data-index="1">
-        <img src="images/cap-3.jpeg" alt="Real G's Golf Cap — back" data-index="2">
+        <img src="images/cap-primary.jpeg" alt="Real G's Golf Cap — front" class="active">
+        <img src="images/cap-2.jpeg" alt="Real G's Golf Cap — side">
+        <img src="images/cap-3.jpeg" alt="Real G's Golf Cap — back">
         <div class="gallery-arrows">
           <div class="gallery-arrow" onclick="prevImg()">&#8592;</div>
           <div class="gallery-arrow" onclick="nextImg()">&#8594;</div>
@@ -174,9 +133,9 @@
 
     <!-- INFO + ORDER -->
     <div class="cap-info">
-      <div class="preorder-tag">⚡ Pre-Order — Limited Drop</div>
+      <div class="stock-tag in-stock" id="stockTag">Loading...</div>
       <h1 class="cap-title">REAL G'S<br>GOLF CAP</h1>
-      <p class="cap-desc">The inaugural Real G's Golf Cap. Navy with embroidered branding and rope brim detail. One size fits all. First run only — once they're gone, they're gone.</p>
+      <p class="cap-desc">The inaugural Real G's Golf Cap. Navy with embroidered branding and rope brim detail. One size fits all. Limited run — once they're gone, they're gone.</p>
 
       <div class="cap-price" id="displayPrice">$39.00</div>
       <p class="cap-price-note" id="priceNote">Select delivery option below</p>
@@ -186,27 +145,18 @@
         <div class="cap-feature">Rope brim detail</div>
         <div class="cap-feature">One size fits all</div>
         <div class="cap-feature">Navy colourway</div>
-        <div class="cap-feature">Limited first run</div>
+        <div class="cap-feature">Limited run</div>
         <div class="cap-feature">Australia Post tracked</div>
       </div>
 
-      <!-- CODE GATE -->
-      <div id="codeSection">
-        <label class="field-label">Pre-Order Access Code</label>
-        <div class="code-row">
-          <input type="text" id="codeInput" placeholder="Enter your code e.g. REALG-001" maxlength="20">
-          <button onclick="validateCode()">Apply</button>
-        </div>
-        <p class="code-msg" id="codeMsg"></p>
-        <div class="no-code-box">
-          Don't have a code? DM <a href="https://instagram.com/realgsgolf" target="_blank">@realgsgolf</a> on Instagram to get your pre-order access code.
-        </div>
+      <!-- SOLD OUT BLOCK -->
+      <div class="sold-out-block" id="soldOutBlock">
+        <h3>SOLD OUT</h3>
+        <p>This drop has sold out. Follow <a href="https://instagram.com/realgsgolf" style="color:var(--accent)">@realgsgolf</a> on Instagram to be notified of the next drop.</p>
       </div>
 
       <!-- ORDER FORM -->
-      <div class="order-form" id="orderForm">
-        <p style="font-size:0.85rem;color:#2ecc71;margin-bottom:1.25rem;">✓ Code accepted — complete your order below</p>
-
+      <div id="orderForm">
         <div class="form-divider">Your Details</div>
         <div class="field-row">
           <div class="field-group"><label class="field-label">First Name</label><input type="text" id="firstName" placeholder="Louis"></div>
@@ -216,7 +166,6 @@
           <div class="field-group"><label class="field-label">Email</label><input type="email" id="email" placeholder="you@email.com"></div>
         </div>
 
-        <!-- DELIVERY TOGGLE -->
         <div class="form-divider">Delivery Method</div>
         <div class="delivery-toggle">
           <label class="delivery-opt active" id="optPostage" onclick="selectDelivery('postage')">
@@ -231,12 +180,10 @@
           </label>
         </div>
 
-        <!-- PICKUP INFO -->
         <div class="pickup-info" id="pickupInfo">
           <p><strong>Pick up selected.</strong> Once your order is confirmed, Real G's will contact you via your email address to arrange pick up details.</p>
         </div>
 
-        <!-- POSTAGE FIELDS -->
         <div id="postageFields">
           <div class="form-divider">Shipping Address</div>
           <div class="field-row full">
@@ -258,7 +205,6 @@
           </div>
         </div>
 
-        <!-- ORDER TOTAL -->
         <div class="order-total">
           <div class="total-row"><span>Real G's Golf Cap × 1</span><span>$39.00</span></div>
           <div class="total-row" id="shippingRow"><span>Australia Post</span><span>$6.50</span></div>
@@ -268,7 +214,7 @@
         <div class="form-divider">Payment</div>
         <div id="payment-element"></div>
         <p class="pay-error" id="payError"></p>
-        <button class="pay-btn" id="payBtn" onclick="submitOrder()">Complete Pre-Order — <span id="btnAmount">$45.50</span></button>
+        <button class="pay-btn" id="payBtn" onclick="submitOrder()">Buy Now — <span id="btnAmount">$45.50</span></button>
         <p class="secure">🔒 Secured by Stripe · SSL encrypted</p>
       </div>
     </div>
@@ -288,18 +234,49 @@
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>
 <script>
-const PREORDER_MODE = true;
 const STRIPE_KEY = 'pk_live_51TODBsDPpKaYTyXbFvZBGKhaMwVfz4dny0jc1XhWI6Ts5CbK6sYUWPI7qlbJNbXhRB4SogsFivEoYCLVWI9tGff600SoD68K2H';
-const VALID_CODES = [
-  'REALG-001','REALG-002','REALG-003','REALG-004','REALG-005',
-  'REALG-006','REALG-007','REALG-008','REALG-009','REALG-010',
-  'REALG-011','REALG-012','REALG-013','REALG-014','REALG-015',
-  'REALG-016','REALG-017','REALG-018','REALG-019','REALG-020'
-];
 
 let currentImg = 0;
 let stripeInstance, stripeElements;
 let deliveryMethod = 'postage';
+let currentStock = 0;
+
+// LOAD STOCK ON PAGE LOAD
+document.addEventListener('DOMContentLoaded', async () => {
+  await checkStock();
+  if (currentStock > 0) initStripe();
+});
+
+async function checkStock() {
+  try {
+    const res = await fetch('/api/get-stock');
+    const data = await res.json();
+    currentStock = data.stock;
+    updateStockUI(currentStock);
+  } catch(e) {
+    currentStock = 5;
+    updateStockUI(5);
+  }
+}
+
+function updateStockUI(stock) {
+  const tag = document.getElementById('stockTag');
+  const orderForm = document.getElementById('orderForm');
+  const soldOut = document.getElementById('soldOutBlock');
+
+  if (stock <= 0) {
+    tag.textContent = 'Sold Out';
+    tag.className = 'stock-tag sold-out';
+    orderForm.style.display = 'none';
+    soldOut.style.display = 'block';
+  } else if (stock <= 3) {
+    tag.textContent = `Only ${stock} left`;
+    tag.className = 'stock-tag low-stock';
+  } else {
+    tag.textContent = `${stock} in stock`;
+    tag.className = 'stock-tag in-stock';
+  }
+}
 
 // GALLERY
 function goToImg(i) {
@@ -340,55 +317,12 @@ function selectDelivery(method) {
     document.getElementById('displayPrice').textContent = '$39.00';
     document.getElementById('priceNote').textContent = 'Pick up — Real G\'s will contact you to arrange details';
   }
-
-  // Re-init Stripe with correct amount
   if (stripeInstance) initStripe();
-}
-
-// CODE VALIDATION
-function validateCode() {
-  const val = document.getElementById('codeInput').value.trim().toUpperCase();
-  const msg = document.getElementById('codeMsg');
-  const used = JSON.parse(localStorage.getItem('rgg_used_codes') || '[]');
-
-  if (used.includes(val)) {
-    msg.className = 'code-msg error';
-    msg.textContent = 'This code has already been used.';
-    return;
-  }
-  if (!PREORDER_MODE || VALID_CODES.includes(val)) {
-    msg.className = 'code-msg success';
-    msg.textContent = '✓ Code accepted';
-    document.getElementById('codeSection').style.display = 'none';
-    document.getElementById('orderForm').classList.add('open');
-    initStripe();
-  } else {
-    msg.className = 'code-msg error';
-    msg.textContent = 'Invalid code. DM @realgsgolf on Instagram to get yours.';
-  }
-}
-
-document.getElementById('codeInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') validateCode();
-});
-
-if (!PREORDER_MODE) {
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('codeSection').style.display = 'none';
-    document.getElementById('orderForm').classList.add('open');
-    initStripe();
-  });
 }
 
 // STRIPE INIT
 async function initStripe() {
   const amount = deliveryMethod === 'postage' ? 4550 : 3900;
-
-  if (STRIPE_KEY === 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE') {
-    document.getElementById('payment-element').innerHTML =
-      '<p style="color:var(--accent);font-size:0.85rem;padding:0.5rem 0;">⚠ Add your Stripe key to cap.html to enable payments.</p>';
-    return;
-  }
   try {
     stripeInstance = Stripe(STRIPE_KEY);
     const res = await fetch('/api/create-payment-intent', {
@@ -414,6 +348,14 @@ async function submitOrder() {
   const btn = document.getElementById('payBtn');
   const errEl = document.getElementById('payError');
 
+  // Check stock one more time before submitting
+  await checkStock();
+  if (currentStock <= 0) {
+    errEl.textContent = 'Sorry — this item just sold out.';
+    updateStockUI(0);
+    return;
+  }
+
   const baseRequired = ['firstName', 'lastName', 'email'];
   const postageRequired = ['address', 'suburb', 'state', 'postcode'];
   const toCheck = deliveryMethod === 'postage' ? [...baseRequired, ...postageRequired] : baseRequired;
@@ -434,7 +376,6 @@ async function submitOrder() {
   btn.disabled = true;
   errEl.textContent = '';
 
-  const code = document.getElementById('codeInput')?.value.trim().toUpperCase() || 'PUBLIC';
   const total = deliveryMethod === 'postage' ? 45.50 : 39.00;
 
   const confirmParams = {
@@ -459,17 +400,16 @@ async function submitOrder() {
 
   if (error) {
     errEl.textContent = error.message;
-    btn.textContent = `Complete Pre-Order — ${deliveryMethod === 'postage' ? '$45.50' : '$39.00'}`;
+    btn.textContent = `Buy Now — ${deliveryMethod === 'postage' ? '$45.50' : '$39.00'}`;
     btn.disabled = false;
   } else {
-    // Mark code used + save order
-    const used = JSON.parse(localStorage.getItem('rgg_used_codes') || '[]');
-    used.push(code);
-    localStorage.setItem('rgg_used_codes', JSON.stringify(used));
+    // Decrement stock
+    await fetch('/api/decrement-stock', { method: 'POST' });
 
+    // Save order
     const orders = JSON.parse(localStorage.getItem('rgg_orders') || '[]');
     orders.push({
-      id: 'RGG-' + Date.now(), code,
+      id: 'RGG-' + Date.now(),
       delivery: deliveryMethod,
       customer: {
         name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
